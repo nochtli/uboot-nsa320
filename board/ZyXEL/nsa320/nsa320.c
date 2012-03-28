@@ -57,46 +57,45 @@ int board_early_init_f(void)
 		MPP5_NF_IO7,
 		MPP6_SYSRST_OUTn,
 		MPP7_GPO,
-		MPP8_TW_SDA,		/* PCF8563 RTC chip  */
-		MPP9_TW_SCK,		/* connected to TWSI */
+		MPP8_TW_SDA,		/* PCF8563 RTC chip   */
+		MPP9_TW_SCK,		/* connected to TWSI  */
 		MPP10_UART0_TXD,
 		MPP11_UART0_RXD,
-		MPP12_GPO,		/* HDD2 LED (green) */
-		MPP13_GPIO,		/* HDD2 LED (red)   */
-		MPP14_GPIO,
-		MPP15_GPIO,		/* USB LED (green)  */
-		MPP16_GPIO,
-		MPP17_GPIO,
+		MPP12_GPO,		/* HDD2 LED (green)   */
+		MPP13_GPIO,		/* HDD2 LED (red)     */
+		MPP14_GPIO,		/* MCU DATA pin (in)  */
+		MPP15_GPIO,		/* USB LED (green)    */
+		MPP16_GPIO,		/* MCU CLK pin (out)  */
+		MPP17_GPIO,		/* MCU ACT pin (out)  */
 		MPP18_NF_IO0,
 		MPP19_NF_IO1,
 		MPP20_GPIO,
-		MPP21_GPIO,		/* USB power ???? */
+		MPP21_GPIO,		/* USB power          */
 		MPP22_GPIO,
 		MPP23_GPIO,
 		MPP24_GPIO,
 		MPP25_GPIO,
 		MPP26_GPIO,
 		MPP27_GPIO,
-		MPP28_GPIO,		/* SYS LED (green)  */
-		MPP29_GPIO,		/* SYS LED (orange) */
+		MPP28_GPIO,		/* SYS LED (green)    */
+		MPP29_GPIO,		/* SYS LED (orange)   */
 		MPP30_GPIO,
 		MPP31_GPIO,
-		/* OE: 0000 0000 0000 0010 0000 0000 0100 1000 */
 		MPP32_GPIO,
 		MPP33_GPIO,
 		MPP34_GPIO,
 		MPP35_GPIO,
-		MPP36_GPIO,		/* reset button ??? */
-		MPP37_GPIO,
-		MPP38_GPIO,
-		MPP39_GPIO,		/* COPY LED (green) */
-		MPP40_GPIO,		/* COPY LED (red)   */
-		MPP41_GPIO,		/* HDD1 LED (green) */
-		MPP42_GPIO,		/* HDD1 LED (red)   */
-		MPP43_GPIO,		/* HTP ???? */
-		MPP44_GPIO,		/* Buzzer */
-		MPP45_GPIO,
-		MPP46_GPIO,		/* power button ???   */
+		MPP36_GPIO,		/* reset button       */
+		MPP37_GPIO,		/* copy button        */
+		MPP38_GPIO,		/* VID B0             */
+		MPP39_GPIO,		/* COPY LED (green)   */
+		MPP40_GPIO,		/* COPY LED (red)     */
+		MPP41_GPIO,		/* HDD1 LED (green)   */
+		MPP42_GPIO,		/* HDD1 LED (red)     */
+		MPP43_GPIO,		/* HTP pin            */
+		MPP44_GPIO,		/* buzzer             */
+		MPP45_GPIO,		/* VID B1             */
+		MPP46_GPIO,		/* power button       */
 		MPP47_GPIO,		/* power resume data  */
 		MPP48_GPIO,		/* power off          */
 		MPP49_GPIO,		/* power resume clock */
