@@ -51,10 +51,10 @@
 #define CONFIG_CMD_ENV
 #define CONFIG_CMD_FAT
 #define CONFIG_CMD_MII
-/* #define CONFIG_CMD_NAND */
+#define CONFIG_CMD_NAND
 #define CONFIG_CMD_PING
 #define CONFIG_CMD_USB
-/* #define CONFIG_CMD_IDE  FIXME!!! */
+/* #define CONFIG_CMD_IDE */
 
 /*
  * mv-common.h should be defined after CMD configs since it used them
@@ -70,9 +70,9 @@
  */
 #ifdef CONFIG_CMD_NAND
 #define CONFIG_ENV_IS_IN_NAND		1
-#define CONFIG_ENV_SECT_SIZE		0x20000	/* 128K */
+#define CONFIG_ENV_SECT_SIZE		0x20000		/* 128K */
 #else
-#define CONFIG_ENV_IS_NOWHERE		1	/* if env in SDRAM */
+#define CONFIG_ENV_IS_NOWHERE		1		/* env in SDRAM */
 #endif
 /*
  * max 4k env size is enough, but in case of nand
@@ -144,10 +144,10 @@
 #define CONFIG_CMD_JFFS2
 /* #define CONFIG_CMD_UBI */
 /* #define CONFIG_CMD_UBIFS */
-#define CONFIG_RBTREE
-/* #define CONFIG_MTD_DEVICE               /\* needed for mtdparts commands *\/ */
-/* #define CONFIG_MTD_PARTITIONS */
-/* #define CONFIG_CMD_MTDPARTS */
+/* #define CONFIG_RBTREE */
+#define CONFIG_MTD_DEVICE               /* needed for mtdparts commands */
+#define CONFIG_MTD_PARTITIONS
+#define CONFIG_CMD_MTDPARTS
 #define CONFIG_LZO
 
 #endif /* _CONFIG_NSA320_H */
