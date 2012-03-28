@@ -51,7 +51,7 @@
 #define CONFIG_CMD_ENV
 #define CONFIG_CMD_FAT
 #define CONFIG_CMD_MII
-/* #define CONFIG_CMD_NAND */
+#define CONFIG_CMD_NAND
 #define CONFIG_CMD_PING
 #define CONFIG_CMD_USB
 #define CONFIG_CMD_IDE
@@ -79,8 +79,8 @@
  * it has to be rounded to sector size
  */
 #define CONFIG_ENV_SIZE			0x20000		/* 128k */
-#define CONFIG_ENV_ADDR			0x100000
-#define CONFIG_ENV_OFFSET		0x100000	/* env starts here */
+#define CONFIG_ENV_ADDR			0x120000
+#define CONFIG_ENV_OFFSET		0x120000	/* env starts here */
 
 /* ###################################################################### */
 /* FIMXE: */
