@@ -119,7 +119,7 @@ int board_init(void)
 }
 
 #ifdef CONFIG_RESET_PHY_R
-/* Configure and enable MV88E1116 PHY */
+/* Configure and enable MV88E1318 PHY */
 void reset_phy(void)
 {
 	u16 reg;
@@ -136,20 +136,17 @@ void reset_phy(void)
 		return;
 	}
 
-	/*
-	 * Enable RGMII delay on Tx and Rx for CPU port
-	 * Ref: sec 4.7.2 of chip datasheet
-	 */
-	miiphy_write(name, devadr, MV88E1116_PGADR_REG, 2);
-	miiphy_read(name, devadr, MV88E1116_MAC_CTRL_REG, &reg);
-	reg |= (MV88E1116_RGMII_RXTM_CTRL | MV88E1116_RGMII_TXTM_CTRL);
-	miiphy_write(name, devadr, MV88E1116_MAC_CTRL_REG, reg);
-	miiphy_write(name, devadr, MV88E1116_PGADR_REG, 0);
+	/* Set RGMII delay */
+	miiphy_write(name, devadr, MV88E1318_PGADR_REG, 2);
+	miiphy_read(name, devadr, MV88E1318_MAC_CTRL_REG, &reg);
+	reg |= (MV88E1318_RGMII_RXTM_CTRL | MV88E1318_RGMII_TXTM_CTRL);
+	miiphy_write(name, devadr, MV88E1318_MAC_CTRL_REG, reg);
+	miiphy_write(name, devadr, MV88E1318_PGADR_REG, 0);
 
 	/* reset the phy */
 	miiphy_reset(name, devadr);
 
-	printf("88E1116 Initialized on %s\n", name);
+	printf("MV88E1318 PHY initialized on %s\n", name);
 }
 #endif /* CONFIG_RESET_PHY_R */
 

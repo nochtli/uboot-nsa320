@@ -125,7 +125,8 @@
  */
 #ifdef CONFIG_CMD_NET
 #define CONFIG_MVGBE_PORTS		{1, 0}	/* enable port 0 only */
-#define CONFIG_PHY_BASE_ADR		0
+#define CONFIG_PHY_BASE_ADR		0x1
+#define CONFIG_PHY_GIGE
 #endif /* CONFIG_CMD_NET */
 
 /*
