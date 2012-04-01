@@ -43,6 +43,11 @@
 #define CONFIG_SKIP_LOWLEVEL_INIT	/* disable board lowlevel_init */
 
 /*
+ * Misc Configuration Options
+ */
+#define CONFIG_SHOW_BOOT_PROGRESS 1	/* boot progess display (LED's) */
+
+/*
  * Commands configuration
  */
 #define CONFIG_SYS_NO_FLASH		/* Declare no flash (NOR/SPI) */

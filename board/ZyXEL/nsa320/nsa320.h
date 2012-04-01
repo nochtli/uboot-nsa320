@@ -28,10 +28,28 @@
 #ifndef __NSA320_H
 #define __NSA320_H
 
-#define NSA320_OE_LOW		(~(0))
-#define NSA320_OE_HIGH		(~(0)) /* FIXME: 0000 0000 0000 0010 0000 0000 0100 1000 */
-#define NSA320_OE_VAL_LOW	((1 << 28)|(1 << 29)) /* SYS LEDs */
-#define NSA320_OE_VAL_HIGH	(0)	/* FIXME! */
+/* low GPIO's */
+#define HDD2_GREEN_LED		(1 << 12)
+#define HDD2_RED_LED		(1 << 13)
+#define USB_GREEN_LED		(1 << 15)
+#define USB_POWER		(1 << 21)
+#define SYS_GREEN_LED		(1 << 28)
+#define SYS_ORANGE_LED		(1 << 29)
+
+#define NSA320_OE_LOW		(~(HDD2_GREEN_LED | HDD2_RED_LED | \
+				   USB_GREEN_LED | USB_POWER | \
+				   SYS_GREEN_LED | SYS_ORANGE_LED))
+#define NSA320_VAL_LOW		(SYS_GREEN_LED)
+
+/* high GPIO's */
+#define COPY_GREEN_LED		(1 << 7)
+#define COPY_RED_LED		(1 << 8)
+#define HDD1_GREEN_LED		(1 << 9)
+#define HDD1_RED_LED		(1 << 10)
+
+#define NSA320_OE_HIGH		(~(COPY_GREEN_LED | COPY_RED_LED | \
+				   HDD1_GREEN_LED | HDD1_RED_LED))
+#define NSA320_VAL_HIGH		(0)
 
 /* PHY related */
 #define MV88E1318_MAC_CTRL_REG		21

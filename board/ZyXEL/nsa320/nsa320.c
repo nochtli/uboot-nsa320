@@ -42,8 +42,7 @@ int board_early_init_f(void)
 	 * There are maximum 64 gpios controlled through 2 sets of registers
 	 * the below configuration configures mainly initial LED status
 	 */
-	kw_config_gpio(NSA320_OE_VAL_LOW,
-		       NSA320_OE_VAL_HIGH,
+	kw_config_gpio(NSA320_VAL_LOW, NSA320_VAL_HIGH,
 		       NSA320_OE_LOW, NSA320_OE_HIGH);
 
 	/* Multi-Purpose Pins Functionality configuration */
@@ -150,34 +149,47 @@ void reset_phy(void)
 }
 #endif /* CONFIG_RESET_PHY_R */
 
-#define SYS_GREEN_LED		(1 << 28)
-#define SYS_RED_LED		(1 << 29)
-#define SYS_BOTH_LEDS		(SYS_GREEN_LED | SYS_RED_LED)
-#define SYS_NEITHER_LED		0
-
-static void set_leds(u32 leds, u32 blinking)
-{
-	/* FIXME: check for active low !!! */
-
-	struct kwgpio_registers *r = (struct kwgpio_registers *)KW_GPIO0_BASE;
-	u32 oe = readl(&r->oe) | SYS_BOTH_LEDS;
-	writel(oe & ~leds, &r->oe);	/* active low */
-	u32 bl = readl(&r->blink_en) & ~SYS_BOTH_LEDS;
-	writel(bl | blinking, &r->blink_en);
-}
-
+#ifdef CONFIG_SHOW_BOOT_PROGRESS
 void show_boot_progress(int val)
 {
+	struct kwgpio_registers *gpio0 = (struct kwgpio_registers *)KW_GPIO0_BASE;
+	u32 dout0 = readl(&gpio0->dout);
+	u32 blen0 = readl(&gpio0->blink_en);
+
+	struct kwgpio_registers *gpio1 = (struct kwgpio_registers *)KW_GPIO1_BASE;
+	u32 dout1 = readl(&gpio1->dout);
+	u32 blen1 = readl(&gpio1->blink_en);
+
 	switch (val) {
-	case 15:		/* booting Linux */
-		set_leds(SYS_BOTH_LEDS, SYS_NEITHER_LED);
+	case BOOTSTAGE_ID_DECOMP_IMAGE:
+		writel(blen0 & ~(SYS_GREEN_LED | SYS_ORANGE_LED), &gpio0->blink_en);
+		writel((dout0 & ~SYS_GREEN_LED) | SYS_ORANGE_LED, &gpio0->dout);
 		break;
-	case 64:		/* Ethernet initialization */
-		set_leds(SYS_GREEN_LED, SYS_GREEN_LED);
+	case BOOTSTAGE_ID_RUN_OS:
+		writel(dout0 & ~SYS_ORANGE_LED, &gpio0->dout);
+		writel(blen0 | SYS_GREEN_LED, &gpio0->blink_en);
+		break;
+	case BOOTSTAGE_ID_NET_START:
+		writel(dout1 & ~COPY_RED_LED, &gpio1->dout);
+		writel((blen1 & ~COPY_RED_LED) | COPY_GREEN_LED, &gpio1->blink_en);
+		break;
+	case BOOTSTAGE_ID_NET_LOADED:
+		writel(blen1 & ~(COPY_RED_LED | COPY_GREEN_LED), &gpio1->blink_en);
+		writel((dout1 & ~COPY_RED_LED) | COPY_GREEN_LED, &gpio1->dout);
+		break;
+	case -BOOTSTAGE_ID_NET_NETLOOP_OK:
+	case -BOOTSTAGE_ID_NET_LOADED:
+		writel(dout1 & ~COPY_GREEN_LED, &gpio1->dout);
+		writel((blen1 & ~COPY_GREEN_LED) | COPY_RED_LED, &gpio1->blink_en);
 		break;
 	default:
-		if (val < 0)	/* error */
-			set_leds(SYS_RED_LED, SYS_RED_LED);
+		if (val < 0) {
+			/* error */
+			printf("Error occured, error code = %d\n", -val);
+			writel(dout0 & ~SYS_GREEN_LED, &gpio0->dout);
+			writel(blen0 | SYS_ORANGE_LED, &gpio0->blink_en);
+		}
 		break;
 	}
 }
+#endif
