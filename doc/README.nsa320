@@ -1,0 +1,65 @@
+ZyXEL NSA320 2-Bay Power Media Server
+http://www.zyxel.com/products_services/nsa320.shtml?t=p
+
+[code]
+#include <standard_disclaimer.h>
+/*
+ * Your warranty is now void.
+ *
+ * I am not responsible for bricked devices, dead SD cards,
+ * thermonuclear war, or you getting fired because the system failed. Please
+ * do some research if you have any concerns about features included in this Kernel/OS
+ * before flashing it! YOU are choosing to use these modifications upon your own choice, and if
+ * you point the finger at me for messing up your device, I'll just sit and laugh at you.
+ */
+[/code]
+
+To start/test NSA320 u-boot perform the following steps:
+
+--------------------------------------
+--      Get & build kwuartboot      --
+--------------------------------------
+
+wget http://www.solinno.co.uk/public/kwuartboot/kwuartboot-0.1.tar.gz
+tar xfz kwuartboot-0.1.tar.gz
+cd kwuartboot-0.1
+make
+
+--------------------------------------
+--  Create the Kirkwood boot image  --
+--------------------------------------
+NOTE: board/ZyXEL/nsa320/kwbimage.cfg is configured for UART booting!
+NOTE: Development was done on Debian Squeeze with cross tools from Emdebian
+
+cd <your uboot directory>
+make CROSS_COMPILE=arm-linux-gnueabi- nsa320_config
+make CROSS_COMPILE=arm-linux-gnueabi- nsa320
+tools/mkimage -n board/ZyXEL/nsa320/kwbimage.cfg -T kwbimage -a 0x00600000 -e 0x00600000 -d u-boot.bin u-boot.kwb
+
+--------------------------------------
+--   Connect your PC to the serial  --
+--   port of the device             --
+--------------------------------------
+NOTE: The NAS's serial hardware signals are at 3.3V. You need a level shifter!
+
+Pin assignment:
+
+    -------------
+J2  | 1 2 3 4 5 |
+    -------------
+
+ 1  ...  3.3V power from board
+ 2  ...  TxD
+ 3  ...  RxD
+ 4  ...  (no pin)
+ 5  ...  GND
+
+(Pictures of the board can be found here: http://www.mikrocontroller.net/topic/211629)
+
+--------------------------------------
+--        Boot the kwb image        --
+--------------------------------------
+
+kwuartboot-0.1/kwuartboot /dev/ttyUSB0 uboot-nsa320/u-boot.kwb
+
+(see also http://www.solinno.co.uk/public/kwuartboot)
