@@ -149,6 +149,16 @@ void reset_phy(void)
 }
 #endif /* CONFIG_RESET_PHY_R */
 
+#ifdef CONFIG_USB_POWER
+void usb_power_on(int pwr_on)
+{
+	const u32 bits = USB_POWER | USB_GREEN_LED;
+	struct kwgpio_registers *gpio0 = (struct kwgpio_registers *)KW_GPIO0_BASE;
+	u32 dout0 = readl(&gpio0->dout);
+	writel(pwr_on ? (dout0 | bits) : (dout0 & ~bits), &gpio0->dout);
+}
+#endif
+
 #ifdef CONFIG_SHOW_BOOT_PROGRESS
 void show_boot_progress(int val)
 {

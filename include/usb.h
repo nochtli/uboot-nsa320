@@ -184,6 +184,11 @@ int usb_kbd_deregister(void);
 int usb_init(void); /* initialize the USB Controller */
 int usb_stop(void); /* stop the USB Controller */
 
+#ifdef CONFIG_USB_POWER
+
+void usb_power_on(int);
+
+#endif
 
 int usb_set_protocol(struct usb_device *dev, int ifnum, int protocol);
 int usb_set_idle(struct usb_device *dev, int ifnum, int duration,

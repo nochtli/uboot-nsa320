@@ -92,6 +92,9 @@ int usb_init(void)
 	running = 0;
 	dev_index = 0;
 	asynch_allowed = 1;
+#ifdef CONFIG_USB_POWER
+	usb_power_on(1);
+#endif
 	usb_hub_reset();
 	/* init low_level USB */
 	printf("USB:   ");
@@ -123,6 +126,9 @@ int usb_stop(void)
 		usb_started = 0;
 		usb_hub_reset();
 		res = usb_lowlevel_stop();
+#ifdef CONFIG_USB_POWER
+		usb_power_on(0);
+#endif
 	}
 	return res;
 }

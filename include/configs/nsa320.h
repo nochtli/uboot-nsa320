@@ -46,7 +46,7 @@
  * Misc Configuration Options
  */
 #define CONFIG_SHOW_BOOT_PROGRESS 1	/* boot progess display (LED's) */
-
+#define CONFIG_USB_POWER 1		/* USB power controlled by GPIO */
 /*
  * Commands configuration
  */
